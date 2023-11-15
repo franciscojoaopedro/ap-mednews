@@ -40,7 +40,7 @@ module.exports = {
 
 
         console.log(postDetails)
-      return res.json({ ok: true, postDetails });
+      return res.json({ ok: true,message:"feito", postDetails });
     } catch (error) {}
   },
   async update(req, res) {},
