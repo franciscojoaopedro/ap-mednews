@@ -4,7 +4,8 @@
   "description": "O projeto MedNews é um blog de notícias focado em saúde, medicina e enfermagem. Ele utiliza MongoDB como banco de dados para armazenar informações sobre postagens, autores e comentários.",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon app.js"
+    "dev": "nodemon  app.js",
+    "start": "node  app.js"
   },
   "author": "ngungadev",
   "license": "ISC",

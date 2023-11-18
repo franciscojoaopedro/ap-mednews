@@ -15,6 +15,21 @@ module.exports={
             return res.status(500).send("Erro ao listar os Posts")
         }
     },
+    async showOnePostEndComments(req,res){
+        try {
+
+            const {post_id } = await req.headers;
+            const post= await Post.findOne({ _id: post_id })
+            .populate("author")
+            .populate({
+              path: "comments",
+              populate: { path: "author"}
+            });
+            
+        } catch (error) {
+            
+        }
+    },
    async execute(req,res){
         try {
             const {title,content }=await req.body

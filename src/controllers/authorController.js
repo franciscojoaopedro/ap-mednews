@@ -1,6 +1,7 @@
 const Author = require('../models/authorModel');
 
 // Implemente as funções CRUD aqui
+//  criar controle para   atualizar o perfil com e adicionar o avatar e a bio!
 
 module.exports={
     async index(req, res){

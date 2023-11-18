@@ -2,9 +2,12 @@ const mongoose = require("mongoose");
 const express = require("express");
 const cors = require("cors");
 const PostRouter = require("../routes/postRoutes");
+require('dotenv').config();
 
 const commentRoutes = require("../routes/commentRoutes");
 const authorRoutes = require("../routes/authorRoutes");
+
+const MONGODB_URI=process.env.MONGODB_URI_DEV;
 class App {
   constructor() {
     this.server = express();
@@ -24,7 +27,7 @@ class App {
   async connection() {
     try {
       await mongoose
-        .connect("mongodb://127.0.0.1:27017/mednews", {})
+        .connect(`${MONGODB_URI}`, {})
         .then(() => console.log("mongodb is connected"))
         .catch(error => console.log(`error ao conectar ao mongodb, ${error}`));
     } catch (error) {console.log("error ao conectar ao mongodb")}
