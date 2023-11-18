@@ -27,6 +27,7 @@ class App {
   async connection() {
     try {
       await mongoose
+        .connection.collection("mednews")
         .connect(`${MONGODB_URI}`, {})
         .then(() => console.log("mongodb is connected"))
         .catch(error => console.log(`error ao conectar ao mongodb, ${error}`));
