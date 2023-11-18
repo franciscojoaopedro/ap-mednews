@@ -7,7 +7,7 @@ require('dotenv').config();
 const commentRoutes = require("../routes/commentRoutes");
 const authorRoutes = require("../routes/authorRoutes");
 
-const MONGODB_URI=process.env.MONGODB_URI_DEV;
+const MONGODB_URI=process.env.MONGODB_URI_PROD || process.env.MONGODB_URI_DEV ;
 class App {
   constructor() {
     this.server = express();
