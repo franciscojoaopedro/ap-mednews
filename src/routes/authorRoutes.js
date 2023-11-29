@@ -5,6 +5,6 @@ const authorController = require('../controllers/authorController');
 authorRoutes.get("/index",authorController.index);
 authorRoutes.post("/create",authorController.execute);
 authorRoutes.put("/update",authorController.update);
-authorRoutes.delete("/destroy",authorController.destroy);
+authorRoutes.delete("/destroy/:id",authorController.destroy);
 
 module.exports=authorRoutes;

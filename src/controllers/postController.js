@@ -7,7 +7,8 @@ const Post = require('../models/postModel');
 module.exports={
     async index(req, res){
         try{
-            let posts= await Post.find();
+            let posts= await Post.find()
+                .populate("author",{name: "$name",bio:"$bio"});
             return res.json({error:false, posts})
         }
         catch (err) {
@@ -47,6 +48,39 @@ module.exports={
             new  Error({message:"erro interno a criar o post",error})
         }
    },
-   async update(req,res){},
-   async destroy(req,res){},
+   async update(req,res){
+   try {
+    const {id}=await req.params;
+    const {author_id}= await req.headers
+    const {title,content}= await req.body
+
+    if(!id && !author_id){
+        return res.json({error:true,message:"verificar a existencia dos post ou do usuario!"})
+    }
+
+    await Post.findByIdAndUpdate({_id:id},{
+        title,
+        content
+    })
+    return res.json({error:false,message:"Post atualizado!"})
+   } catch (error) {
+       console.log({error:true,messageError:error})
+   }
+   },
+   async destroy(req,res){
+        try{
+            const {id}=await req.params
+
+            const findPost=await  Post.findById({_id: id})
+            if(!findPost){
+                return res.json({error:true,message:"post não encontrado!"})
+            }
+            await  Post.findByIdAndDelete({_id:id})
+
+            return res.json({error:false,message:"post deletado!"})
+
+        }catch(error){
+                console.log({error:true,messageError:error})
+        }
+   },
 }

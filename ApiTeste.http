@@ -1,0 +1,10 @@
+### Send POST request with json body
+POST http://localhost:3333/posts/create
+Content-Type: application/json
+{
+  "title": "",
+  "contente": ""
+}
+### BUSCAR TODOS OS POSTS
+GET http://localhost:3333/posts/index
+Accept: application/json

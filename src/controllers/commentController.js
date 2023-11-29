@@ -37,12 +37,25 @@ module.exports = {
           path: "comments",
           populate: { path: "author"}
         });
-
-
         console.log(postDetails)
       return res.json({ ok: true,message:"feito", postDetails });
     } catch (error) {}
   },
   async update(req, res) {},
-  async delete(req, res) {}
+  async destroy(req, res) {
+    try {
+      const {id}=await req.params;
+      const {post_id}=await req.headers;
+      const comments=await Comment.findById({_id:post_id});
+      const post=await Post.findById({_id:id});
+      if(!comments && !post){
+        return res.json({error:false,message:"comentarios não encontrado!"})
+      }
+      await Comment.findByIdAndDelete({_id:id})
+      await Post.updateOne({_id:post_id},{comments:[id]})
+      return res.json({error:false,message:"delete commented"});
+    } catch (error) {
+      console.log(`error ${error}`);
+    }
+  }
 };
