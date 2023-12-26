@@ -15,6 +15,23 @@ module.exports={
             return res.json({error:true,message:error,msm:"não é possivel mostrar os authors"})
         }
     },
+
+    async indexOne(req, res){
+        const {email}=req.params
+        try {
+            const user=await Author.findOne({email:email});
+            if(user==[]){
+                return res.json({error:false,message:"não existe nenhum author"})
+            }
+            return res.json({ok:true,message:"index author",user})
+        } catch (error) {
+            return res.json({error:true,message:error,msm:"não é possivel mostrar o author"})
+        }
+    },
+    
+
+
+
    async execute(req,res){
     const {name,email,bio}=await req.body
     try {
