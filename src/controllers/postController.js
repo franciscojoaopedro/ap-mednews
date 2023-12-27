@@ -16,19 +16,51 @@ module.exports={
             return res.status(500).send("Erro ao listar os Posts")
         }
     },
+    async indexOF(req, res){
+        try{
+            let posts= await Post.find()
+                .populate("author",{name: "$name",bio:"$bio"});
+            return res.json({error:false, posts})
+        }
+        catch (err) {
+            console.log(err);
+            return res.status(500).send("Erro ao listar os Posts")
+        }
+    },
+    async indexUserAndAllPosts(req, res){
+        const {id}=req.params
+        try {
+            const user=await Author.find({_id:id})
+            
+            const allPost= await Post.find({author:id})
+            .populate("author","name email bio")
+            
+
+            if(!user){
+                return res.json({error:true,message:"não existe nenhum author"})
+            }
+            
+            return res.json({error:false,message:"todos os post",
+            allPost
+        })
+        } catch (error) {
+            return res.json({error:true,message:error,msm:"não é possivel mostrar o author"})
+        }
+    },
+
     async showOnePostEndComments(req,res){
         try {
-
-            const {post_id } = await req.headers;
-            const post= await Post.findOne({ _id: post_id })
+            const {id } = await req.params;
+            const post= await Post.findOne({ _id:id })
             .populate("author")
             .populate({
               path: "comments",
               populate: { path: "author"}
             });
             
+            return res.json({error:false,post})
         } catch (error) {
-            
+            console.log(error)
         }
     },
    async execute(req,res){
@@ -48,6 +80,7 @@ module.exports={
             new  Error({message:"erro interno a criar o post",error})
         }
    },
+
    async update(req,res){
    try {
     const {id}=await req.params;
@@ -67,6 +100,7 @@ module.exports={
        console.log({error:true,messageError:error})
    }
    },
+   
    async destroy(req,res){
         try{
             const {id}=await req.params

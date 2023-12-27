@@ -1,5 +1,6 @@
 const Author = require('../models/authorModel');
 
+
 // Implemente as funções CRUD aqui
 //  criar controle para   atualizar o perfil com e adicionar o avatar e a bio!
 
@@ -28,8 +29,9 @@ module.exports={
             return res.json({error:true,message:error,msm:"não é possivel mostrar o author"})
         }
     },
-    
 
+   
+    
 
 
    async execute(req,res){
